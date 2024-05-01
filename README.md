@@ -1,11 +1,5 @@
-# Projeto Timer Promodoro.
+# Projeto Todo List.
 
 ## Sobre o projeto
 
-O projeto consiste em criar algumas atividades e por quanto tempo se deseja trabalhar nelas. Foram utilizadas as seguintes tecnologias:
-
-1. React
-2. Typescript
-3. Styled Components
-
-![alt text](image.png)
+Projeto de todo list feito com as tecnologias: ReactJs, Typescript, Styled Components. Nesse projeto é possível realizar a adição, edição, listagem e exclusão de tarefas.
