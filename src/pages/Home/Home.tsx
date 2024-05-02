@@ -1,4 +1,6 @@
-import { ChangeEvent, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChangeEvent, useEffect, useState } from "react";
+import { api } from "../../service";
 import { ITask } from "./Home.types";
 import { EditTask } from "./components";
 import { Header } from "../../components";
@@ -92,6 +94,28 @@ export function Home() {
       })
     );
   }
+
+  async function getTasks() {
+    try {
+      const response = await api.get("/tasks");
+      setTasks(response.data);
+    } catch (error: any) {
+      if (error.response) {
+        console.error("Erro de resposta do servidor:", error.response.data);
+        console.error("Status do erro:", error.response.status);
+        console.error("Cabeçalhos de resposta:", error.response.headers);
+      } else if (error.request) {
+        console.error("Não houve resposta da API:", error.request);
+      } else {
+        console.error("Erro ao configurar a requisição:", error.message);
+      }
+      throw error;
+    }
+  }
+
+  useEffect(() => {
+    getTasks();
+  }, []);
 
   return (
     <HomeContainer>

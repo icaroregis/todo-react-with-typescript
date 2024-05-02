@@ -7,7 +7,7 @@
     "database": "json-server --watch db.json --port 5000"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ícaro Almeida",
   "license": "ISC",
   "dependencies": {
     "database": "0.0.2",
