@@ -171,6 +171,8 @@ export function Home() {
         <EditTask
           taskData={taskData}
           state={[openEditModal, setOpenEditModal]}
+          taskList={tasks}
+          updateFunction={setTasks}
         />
       )}
     </HomeContainer>

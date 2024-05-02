@@ -3,10 +3,33 @@ import { Modal } from "../../../../components";
 import { IEditTask, IEditTaskProps } from "./EditTask.types";
 import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
 
-export function EditTask({ state: [open, setOpen], taskData }: IEditTaskProps) {
+export function EditTask({
+  state: [open, setOpen],
+  taskData,
+  taskList,
+  updateFunction,
+}: IEditTaskProps) {
   const [inputValues, setInputValues] = useState<IEditTask>({
     name: "",
   });
+
+  function editTask() {
+    if (taskData) {
+      const updatedTaskList = taskList.map((task) => {
+        if (task.id === taskData.id) {
+          return {
+            ...task,
+            name: inputValues.name,
+          };
+        }
+        return task;
+      });
+
+      updatedTaskList.sort((a, b) => a.id - b.id);
+      updateFunction(updatedTaskList);
+      setOpen(false);
+    }
+  }
 
   useEffect(() => {
     if (taskData) {
@@ -36,9 +59,7 @@ export function EditTask({ state: [open, setOpen], taskData }: IEditTaskProps) {
           }
         />
 
-        <div>
-          <EditButton>Editar Tarefa</EditButton>
-        </div>
+        <EditButton onClick={editTask}>Editar Tarefa</EditButton>
       </EditContainer>
     </Modal>
   );
