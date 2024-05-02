@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import { api } from "../../../../service";
 import { Modal } from "../../../../components";
 import { IEditTask, IEditTaskProps } from "./EditTask.types";
 import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
@@ -13,21 +14,30 @@ export function EditTask({
     name: "",
   });
 
-  function editTask() {
-    if (taskData) {
-      const updatedTaskList = taskList.map((task) => {
-        if (task.id === taskData.id) {
-          return {
-            ...task,
-            name: inputValues.name,
-          };
-        }
-        return task;
-      });
+  async function editTask() {
+    try {
+      if (taskData) {
+        const data = {
+          name: inputValues.name,
+        };
 
-      updatedTaskList.sort((a, b) => (a.id as number) - (b.id as number));
-      updateFunction(updatedTaskList);
-      setOpen(false);
+        await api.put(`/tasks/${taskData.id}`, data);
+
+        const updatedTaskList = taskList.map((task) => {
+          if (task.id === taskData.id) {
+            return {
+              ...task,
+              name: inputValues.name,
+            };
+          }
+          return task;
+        });
+
+        updateFunction(updatedTaskList);
+        setOpen(false);
+      }
+    } catch (error) {
+      console.error("Erro ao editar a tarefa:", error);
     }
   }
 
