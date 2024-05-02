@@ -33,12 +33,7 @@ export function EditTask({
 
   function verification() {
     const verifications = inputValues.name.trim() === "";
-
-    if (verifications) {
-      return true;
-    }
-
-    return false;
+    return verifications;
   }
 
   function areValuesChanged(): boolean {
