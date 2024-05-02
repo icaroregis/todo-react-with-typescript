@@ -42,7 +42,7 @@ export function EditTask({
     if (taskData) {
       if (!inputValues) return false;
 
-      return (validation = inputValues.name !== taskData.name.trim());
+      return (validation = inputValues.name.trim() !== taskData.name.trim());
     }
 
     return validation;
