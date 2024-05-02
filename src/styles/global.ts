@@ -9,8 +9,9 @@ export const GlobalStyle = createGlobalStyle`
   }  
 
   body {
-    background-color: ${({ theme }) => theme["gray-500"]};      
+    background-color: ${({ theme }) => theme["gray-600"]};      
     -webkit-font-smoothing: antialiased;  
+    overflow: hidden; 
   } 
 
   body, input, button { 
