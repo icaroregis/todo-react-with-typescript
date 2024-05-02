@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useEffect, useState } from "react";
 import { api } from "../../service";
 import { ITask } from "./Home.types";
@@ -26,29 +25,13 @@ import {
 export function Home() {
   const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
   const [addTask, setAddTask] = useState<string>("");
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [taskData, setTaskData] = useState<ITask>({
     id: 0,
     name: "",
     completed: false,
   });
-  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<ITask[]>([
-    {
-      id: 1,
-      name: "Estudar inglês",
-      completed: false,
-    },
-    {
-      id: 2,
-      name: "Regar as plantas",
-      completed: false,
-    },
-    {
-      id: 3,
-      name: "Praticar 30 minutos de yoga",
-      completed: false,
-    },
-  ]);
 
   function handleToggleTask(taskId: number) {
     setTasks((prevTasks) => {
@@ -75,41 +58,44 @@ export function Home() {
     });
   }
 
-  function createTask() {
-    const newTask = {
-      id: tasks.length + 1,
-      name: addTask,
-      completed: false,
-    };
+  async function createTask() {
+    try {
+      const newTask = {
+        name: addTask,
+        completed: false,
+      };
 
-    if (addTask.trim() !== "") {
-      setTasks((prevState) => [...prevState, newTask]);
+      await api.post("/tasks", newTask);
+
+      if (addTask.trim() !== "") {
+        setTasks((prevState) => [...prevState, newTask]);
+      }
+
+      setAddTask("");
+    } catch (error) {
+      console.error("Erro ao criar tarefa:", error);
     }
   }
 
-  function deleteTask(taskId: number) {
-    setTasks((prevState) =>
-      prevState.filter((task) => {
-        return task.id !== taskId;
-      })
-    );
+  async function deleteTask(taskId: number) {
+    try {
+      await api.delete(`/tasks/${taskId}`);
+      setTasks((prevState) =>
+        prevState.filter((task) => {
+          return task.id !== taskId;
+        })
+      );
+    } catch (error) {
+      console.error("Erro ao excluir tarefa:", error);
+    }
   }
 
   async function getTasks() {
     try {
       const response = await api.get("/tasks");
       setTasks(response.data);
-    } catch (error: any) {
-      if (error.response) {
-        console.error("Erro de resposta do servidor:", error.response.data);
-        console.error("Status do erro:", error.response.status);
-        console.error("Cabeçalhos de resposta:", error.response.headers);
-      } else if (error.request) {
-        console.error("Não houve resposta da API:", error.request);
-      } else {
-        console.error("Erro ao configurar a requisição:", error.message);
-      }
-      throw error;
+    } catch (error) {
+      console.error("Erro ao listar as tarefas:", error);
     }
   }
 
@@ -171,11 +157,14 @@ export function Home() {
                   <input
                     type="checkbox"
                     checked={task.completed}
-                    onChange={() => handleToggleTask(task.id)}
+                    onChange={() => handleToggleTask(task.id as number)}
                   />
                   <TaskName completed={task.completed}>{task.name}</TaskName>
                   <div>
-                    <Trash size={32} onClick={() => deleteTask(task.id)} />
+                    <Trash
+                      size={32}
+                      onClick={() => deleteTask(task.id as number)}
+                    />
                     <Pen
                       size={32}
                       onClick={() => {

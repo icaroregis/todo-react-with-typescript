@@ -25,7 +25,7 @@ export function EditTask({
         return task;
       });
 
-      updatedTaskList.sort((a, b) => a.id - b.id);
+      updatedTaskList.sort((a, b) => (a.id as number) - (b.id as number));
       updateFunction(updatedTaskList);
       setOpen(false);
     }
