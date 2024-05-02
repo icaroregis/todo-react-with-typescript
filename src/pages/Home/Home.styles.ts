@@ -182,6 +182,7 @@ export const TaskContainer = styled.div`
   svg:last-child {
     cursor: pointer;
     color: ${({ theme }) => theme["gray-300"]};
+    transition: color 0.2s ease;
 
     &:hover {
       color: ${({ theme }) => theme["red-danger"]};
