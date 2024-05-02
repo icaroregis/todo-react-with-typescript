@@ -1,0 +1,14 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "name": "Fazer o café",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "name": "Estudar Inglês",
+      "completed": false
+    }
+  ]
+}
