@@ -1,11 +1,12 @@
 {
   "tasks": [
     {
-      "name": "Fazer o feijão",
+      "name": "Varrer a sala",
       "id": 1
     },
     {
-      "name": "Estudar francês",
+      "name": "Estudar Node Js",
+      "completed": false,
       "id": 2
     }
   ]
