@@ -98,7 +98,7 @@ export function Home() {
           value={addTask}
           onChange={({ target }) => setAddTask(target.value)}
         />
-        <NewTaskButton onClick={createTask} disabled={!addTask}>
+        <NewTaskButton onClick={createTask} disabled={!addTask.trim()}>
           Criar <PlusCircle size={25} />
         </NewTaskButton>
       </NewTaskContainer>

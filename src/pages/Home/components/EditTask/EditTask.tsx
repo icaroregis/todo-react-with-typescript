@@ -1,6 +1,6 @@
 import { Modal } from "../../../../components";
-import { EditContainer } from "./EditTask.styles";
 import { IEditTaskProps } from "./EditTask.types";
+import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
 
 export function EditTask({ state: [open, setOpen] }: IEditTaskProps) {
   return (
@@ -12,7 +12,13 @@ export function EditTask({ state: [open, setOpen] }: IEditTaskProps) {
       width="40vw"
       maxWidth="70rem"
     >
-      <EditContainer>teste</EditContainer>
+      <EditContainer>
+        <EditInput />
+
+        <div>
+          <EditButton>Editar Tarefa</EditButton>
+        </div>
+      </EditContainer>
     </Modal>
   );
 }
