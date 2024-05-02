@@ -1,8 +1,21 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import { Modal } from "../../../../components";
-import { IEditTaskProps } from "./EditTask.types";
+import { IEditTask, IEditTaskProps } from "./EditTask.types";
 import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
 
-export function EditTask({ state: [open, setOpen] }: IEditTaskProps) {
+export function EditTask({ state: [open, setOpen], taskData }: IEditTaskProps) {
+  const [inputValues, setInputValues] = useState<IEditTask>({
+    name: "",
+  });
+
+  useEffect(() => {
+    if (taskData) {
+      setInputValues({
+        name: taskData.name,
+      });
+    }
+  }, [taskData]);
+
   return (
     <Modal
       title="Edição de Tasks"
@@ -13,7 +26,15 @@ export function EditTask({ state: [open, setOpen] }: IEditTaskProps) {
       maxWidth="70rem"
     >
       <EditContainer>
-        <EditInput />
+        <EditInput
+          value={inputValues?.name}
+          onChange={({ target }: ChangeEvent<HTMLInputElement>) =>
+            setInputValues((prevState) => ({
+              ...prevState,
+              name: target.value,
+            }))
+          }
+        />
 
         <div>
           <EditButton>Editar Tarefa</EditButton>

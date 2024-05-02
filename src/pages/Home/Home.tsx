@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ITask } from "./Home.types";
 import { EditTask } from "./components";
 import { Header } from "../../components";
@@ -24,6 +24,11 @@ import {
 export function Home() {
   const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
   const [addTask, setAddTask] = useState<string>("");
+  const [taskData, setTaskData] = useState<ITask>({
+    id: 0,
+    name: "",
+    completed: false,
+  });
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [tasks, setTasks] = useState<ITask[]>([
     {
@@ -96,7 +101,9 @@ export function Home() {
         <TaskInput
           placeholder="Adicione uma nova tarefa"
           value={addTask}
-          onChange={({ target }) => setAddTask(target.value)}
+          onChange={({ target }: ChangeEvent<HTMLInputElement>) =>
+            setAddTask(target.value)
+          }
         />
         <NewTaskButton onClick={createTask} disabled={!addTask.trim()}>
           Criar <PlusCircle size={25} />
@@ -145,7 +152,13 @@ export function Home() {
                   <TaskName completed={task.completed}>{task.name}</TaskName>
                   <div>
                     <Trash size={32} onClick={() => deleteTask(task.id)} />
-                    <Pen size={32} onClick={() => setOpenEditModal(true)} />
+                    <Pen
+                      size={32}
+                      onClick={() => {
+                        setOpenEditModal(true);
+                        setTaskData(task);
+                      }}
+                    />
                   </div>
                 </TaskContainer>
               );
@@ -154,7 +167,12 @@ export function Home() {
         </TaskListContainer>
       </ScrollableContainer>
 
-      {openEditModal && <EditTask state={[openEditModal, setOpenEditModal]} />}
+      {openEditModal && (
+        <EditTask
+          taskData={taskData}
+          state={[openEditModal, setOpenEditModal]}
+        />
+      )}
     </HomeContainer>
   );
 }

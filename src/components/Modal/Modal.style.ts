@@ -87,7 +87,7 @@ export const ModalCloseButton = styled.button`
 
   svg {
     position: relative;
-    top: 63%;
+    top: 72%;
     transform: translateY(-50%) !important;
     fill: ${({ theme }) => theme.white};
     width: 40px;
