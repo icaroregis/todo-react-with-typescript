@@ -31,6 +31,28 @@ export function EditTask({
     }
   }
 
+  function verification() {
+    const verifications = inputValues.name.trim() === "";
+
+    if (verifications) {
+      return true;
+    }
+
+    return false;
+  }
+
+  function areValuesChanged(): boolean {
+    let validation: boolean = false;
+
+    if (taskData) {
+      if (!inputValues) return false;
+
+      return (validation = inputValues.name !== taskData.name.trim());
+    }
+
+    return validation;
+  }
+
   useEffect(() => {
     if (taskData) {
       setInputValues({
@@ -59,7 +81,12 @@ export function EditTask({
           }
         />
 
-        <EditButton onClick={editTask}>Editar Tarefa</EditButton>
+        <EditButton
+          onClick={editTask}
+          disabled={!areValuesChanged() || verification()}
+        >
+          Editar Tarefa
+        </EditButton>
       </EditContainer>
     </Modal>
   );

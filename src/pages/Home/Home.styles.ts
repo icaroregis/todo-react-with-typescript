@@ -178,9 +178,20 @@ export const TaskContainer = styled.div`
     cursor: pointer;
   }
 
-  svg {
+  svg:first-child,
+  svg:last-child {
     cursor: pointer;
     color: ${({ theme }) => theme["gray-300"]};
+
+    &:hover {
+      color: ${({ theme }) => theme["red-danger"]};
+    }
+  }
+
+  svg:last-child {
+    &:hover {
+      color: ${({ theme }) => theme["purple-dark"]};
+    }
   }
 
   > div {
