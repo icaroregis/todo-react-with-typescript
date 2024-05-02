@@ -17,6 +17,7 @@ export const HomeContainer = styled.main`
 export const NewTaskContainer = styled.div`
   margin-top: ${convertPixelsToRem(-27)};
   display: flex;
+  align-items: center;
   gap: 10px;
 `;
 
@@ -38,7 +39,7 @@ export const TaskInput = styled.input`
 export const NewTaskButton = styled.button`
   cursor: pointer;
   width: ${convertPixelsToRem(90)};
-  height: ${convertPixelsToRem(52)};
+  height: ${convertPixelsToRem(48)};
   border-radius: ${convertPixelsToRem(8)};
   background-color: ${({ theme }) => theme["blue-dark"]};
   border: none;
@@ -49,8 +50,13 @@ export const NewTaskButton = styled.button`
   color: ${({ theme }) => theme.white};
   transition: background-color 0.2s ease;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: ${({ theme }) => darken(0.1, theme["blue-dark"])};
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 `;
 

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ITask } from "./Home.types";
+import { EditTask } from "./components";
 import { Header } from "../../components";
 import Clipboard from "../../assets/Clipboard.svg";
 import { Pen, PlusCircle, Trash } from "phosphor-react";
@@ -18,11 +20,11 @@ import {
   ScrollableContainer,
   TaskName,
 } from "./Home.styles";
-import { ITask } from "./Home.types";
 
 export function Home() {
-  const [completedTasksCount, setCompletedTasksCount] = useState(0);
-  const [addTask, setAddTask] = useState("");
+  const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
+  const [addTask, setAddTask] = useState<string>("");
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [tasks, setTasks] = useState<ITask[]>([
     {
       id: 1,
@@ -73,7 +75,9 @@ export function Home() {
       completed: false,
     };
 
-    setTasks((prevState) => [...prevState, newTask]);
+    if (addTask.trim() !== "") {
+      setTasks((prevState) => [...prevState, newTask]);
+    }
   }
 
   function deleteTask(taskId: number) {
@@ -94,7 +98,7 @@ export function Home() {
           value={addTask}
           onChange={({ target }) => setAddTask(target.value)}
         />
-        <NewTaskButton onClick={createTask}>
+        <NewTaskButton onClick={createTask} disabled={!addTask}>
           Criar <PlusCircle size={25} />
         </NewTaskButton>
       </NewTaskContainer>
@@ -141,7 +145,7 @@ export function Home() {
                   <TaskName completed={task.completed}>{task.name}</TaskName>
                   <div>
                     <Trash size={32} onClick={() => deleteTask(task.id)} />
-                    <Pen size={32} />
+                    <Pen size={32} onClick={() => setOpenEditModal(true)} />
                   </div>
                 </TaskContainer>
               );
@@ -149,6 +153,8 @@ export function Home() {
           )}
         </TaskListContainer>
       </ScrollableContainer>
+
+      {openEditModal && <EditTask state={[openEditModal, setOpenEditModal]} />}
     </HomeContainer>
   );
 }
