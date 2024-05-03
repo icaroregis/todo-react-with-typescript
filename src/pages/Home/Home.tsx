@@ -157,9 +157,7 @@ export function Home() {
                   <input
                     type="checkbox"
                     checked={task.completed}
-                    onChange={() => {
-                      handleToggleTask(task.id as number);
-                    }}
+                    onChange={() => handleToggleTask(task.id as number)}
                   />
                   <TaskName completed={task.completed}>{task.name}</TaskName>
                   <div>

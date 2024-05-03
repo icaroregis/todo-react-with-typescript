@@ -1,13 +1,19 @@
 {
   "tasks": [
     {
-      "name": "Varrer a sala",
+      "name": "Fazer 50 minutos de caminhada.",
+      "completed": false,
       "id": 1
     },
     {
-      "name": "Estudar Node Js",
+      "name": "Estudar inglês pela manhã",
       "completed": false,
       "id": 2
+    },
+    {
+      "name": "Sair com o Christian para brincar",
+      "completed": false,
+      "id": 3
     }
   ]
 }
