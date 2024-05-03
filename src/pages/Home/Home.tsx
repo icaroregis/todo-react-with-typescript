@@ -92,7 +92,7 @@ export function Home() {
 
   async function getTasks() {
     try {
-      const response = await api.get("/tasks");
+      const response = await api.get("/list");
       setTasks(response.data);
     } catch (error) {
       console.error("Erro ao listar as tarefas:", error);
