@@ -1,3 +1,4 @@
+import { darken } from "polished";
 import { convertPixelsToRem } from "../../utils";
 import styled from "styled-components";
 
@@ -13,7 +14,7 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  gap: ${convertPixelsToRem(50)};
+  gap: ${convertPixelsToRem(100)};
 `;
 
 export const ContainerLogo = styled.div`
@@ -40,6 +41,21 @@ export const ContentInput = styled.div<IPropsLogin>`
   height: ${({ height }) => (height ? height : "inherit")};
   border-radius: 14px;
   background: transparent !important;
+  margin-bottom: 50px;
+
+  input {
+    width: 100%;
+    height: ${convertPixelsToRem(54)};
+    border-radius: ${convertPixelsToRem(8)};
+    border: 1px solid ${({ theme }) => theme["gray-700"]};
+    padding: 0 ${convertPixelsToRem(15)};
+    color: ${({ theme }) => theme["gray-300"]};
+
+    &:focus {
+      outline: 0;
+      border: 2px solid ${({ theme }) => theme["blue-dark"]};
+    }
+  }
 
   label {
     display: block;
@@ -62,10 +78,11 @@ export const ContentInput = styled.div<IPropsLogin>`
 
     > button {
       position: absolute;
-      top: ${convertPixelsToRem(15)};
+      top: ${convertPixelsToRem(18)};
       right: ${convertPixelsToRem(18.2)};
       background-color: transparent;
       border: none;
+      cursor: pointer;
 
       &:focus {
         outline: none;
@@ -76,7 +93,7 @@ export const ContentInput = styled.div<IPropsLogin>`
 `;
 
 export const ForgotYourPassword = styled.section`
-  margin-top: -6px;
+  margin-top: ${convertPixelsToRem(100)};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -110,6 +127,37 @@ export const ContainerRegisterAnAccount = styled.div`
 `;
 
 export const Button = styled.button`
-  margin-top: ${convertPixelsToRem(10)};
   width: 100% !important;
+  cursor: pointer;
+  width: ${convertPixelsToRem(90)};
+  height: ${convertPixelsToRem(54)};
+  border-radius: ${convertPixelsToRem(8)};
+  background-color: ${({ theme }) => theme["blue-dark"]};
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${convertPixelsToRem(4)};
+  color: ${({ theme }) => theme.white};
+  transition: background-color 0.2s ease;
+
+  &:not(:disabled):hover {
+    background-color: ${({ theme }) => darken(0.1, theme["blue-dark"])};
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
+export const TitleContainer = styled.div`
+  margin-bottom: ${convertPixelsToRem(60)};
+  h1 {
+    font-family: "Poppins", sans-serif;
+  }
+`;
+
+export const IconContainer = styled.div`
+  margin-bottom: 30px;
 `;

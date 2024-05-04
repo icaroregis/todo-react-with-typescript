@@ -1,11 +1,9 @@
 import styled from "styled-components";
+import { convertPixelsToRem } from "../../utils";
 
 export const ImageContent = styled.div`
-  width: 770px;
-  height: 285px;
-
   img {
-    width: 100%;
-    height: 100%;
+    width: ${convertPixelsToRem(700)};
+    height: ${convertPixelsToRem(700)};
   }
 `;
