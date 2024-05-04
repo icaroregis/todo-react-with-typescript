@@ -79,7 +79,7 @@ export function Home() {
 
   async function deleteTask(taskId: number) {
     try {
-      await api.delete(`/tasks/${taskId}`);
+      await api.delete(`/delete/${taskId}`);
       setTasks((prevState) =>
         prevState.filter((task) => {
           return task.id !== taskId;
@@ -92,7 +92,7 @@ export function Home() {
 
   async function getTasks() {
     try {
-      const response = await api.get("/list");
+      const response = await api.get("/tasks");
       setTasks(response.data);
     } catch (error) {
       console.error("Erro ao listar as tarefas:", error);
