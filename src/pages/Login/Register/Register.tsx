@@ -1,42 +1,62 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { InputProps } from "./Login.types";
 import { FcTodoList } from "react-icons/fc";
-import { convertPixelsToRem } from "../../utils";
-import { LoginCard } from "../../components/LoginCard";
-import Logo from "../../assets/todo.svg";
+import Rocket from "../../../assets/rocket.svg";
+import { convertPixelsToRem } from "../../../utils";
+import { LoginCard } from "../../../components/LoginCard";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
-import { ClickableCustomizableLogo } from "../../components/ClickableCustomizableLogo";
+import { ClickableCustomizableLogo } from "../../../components/ClickableCustomizableLogo";
 import {
   Block,
   ContentInput,
   ForgotYourPassword,
   Button,
-  LoginContainer,
   TitleContainer,
   IconContainer,
-} from "./Login.styles";
+  RegisterContainer,
+} from "./Register.styles";
+import { InputProps } from "./Register.types";
+import { api } from "../../../service";
 
-export function Login() {
+export function Register() {
   const [hidePassword, setHidePassword] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<InputProps>({
+    name: "",
     email: "",
     password: "",
   });
 
   function validations() {
     const isDisabled =
-      inputValues.email.trim() !== "" && inputValues.password.trim() !== "";
+      inputValues.email.trim() !== "" &&
+      inputValues.password.trim() !== "" &&
+      inputValues.name.trim() !== "";
 
     return isDisabled;
   }
 
-  async function handleUserLogin() {}
+  async function handleUserRegister() {
+    try {
+      const data = {
+        name: inputValues.name,
+        email: inputValues.email,
+        password: inputValues.password,
+      };
+
+      const teste = await api.post("/users/register", { data });
+      console.log(teste);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
-    <LoginContainer>
+    <RegisterContainer>
       <div>
-        <ClickableCustomizableLogo srcImage={Logo} alt={"Logomarca do Autor"} />
+        <ClickableCustomizableLogo
+          srcImage={Rocket}
+          alt={"Imagem de um foguete"}
+        />
       </div>
 
       <div>
@@ -46,11 +66,27 @@ export function Login() {
           </IconContainer>
 
           <TitleContainer>
-            <h1>Login</h1>
+            <h1>Cadastro</h1>
           </TitleContainer>
 
           <Block>
             <div>
+              <ContentInput
+                height={convertPixelsToRem(50)}
+                width={convertPixelsToRem(400)}
+              >
+                <label htmlFor="email">Nome</label>
+
+                <input
+                  id="name"
+                  type="text"
+                  value={inputValues.name}
+                  onChange={({ target }) => {
+                    setInputValues({ ...inputValues, name: target.value });
+                  }}
+                />
+              </ContentInput>
+
               <ContentInput
                 height={convertPixelsToRem(50)}
                 width={convertPixelsToRem(400)}
@@ -99,7 +135,7 @@ export function Login() {
                 </div>
               </ContentInput>
 
-              <Button onClick={handleUserLogin} disabled={!validations()}>
+              <Button onClick={handleUserRegister} disabled={!validations()}>
                 Entrar
               </Button>
             </div>
@@ -107,11 +143,11 @@ export function Login() {
 
           <ForgotYourPassword>
             <div>
-              Novo por aqui ? <Link to="/register">Cadastre-se</Link>
+              <Link to="/">Voltar para Login</Link>
             </div>
           </ForgotYourPassword>
         </LoginCard>
       </div>
-    </LoginContainer>
+    </RegisterContainer>
   );
 }

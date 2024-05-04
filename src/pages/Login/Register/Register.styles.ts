@@ -1,6 +1,6 @@
-import { darken } from "polished";
-import { convertPixelsToRem } from "../../utils";
 import styled from "styled-components";
+import { darken } from "polished";
+import { convertPixelsToRem } from "../../../utils";
 
 interface IPropsLogin {
   inputBorder?: boolean;
@@ -9,7 +9,7 @@ interface IPropsLogin {
   width?: string | undefined;
 }
 
-export const LoginContainer = styled.div`
+export const RegisterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import Logo from "../../assets/IMG_20240504_155217.svg";
 import { ImageContent } from "./ClickableCustomizableLogo.styles";
+import { LogoProps } from "./ClickableCustomizableLogo.types";
 
-export const ClickableCustomizableLogo = () => {
+export const ClickableCustomizableLogo = ({ srcImage, alt }: LogoProps) => {
   return (
     <ImageContent>
       <Link to="https://icaroregis.github.io/portifolio/" target="_blank">
-        <img src={Logo} alt="Marca pessoal do autor" />
+        <img src={srcImage} alt={alt} />
       </Link>
     </ImageContent>
   );

@@ -6,4 +6,8 @@ export const ImageContent = styled.div`
     width: ${convertPixelsToRem(700)};
     height: ${convertPixelsToRem(700)};
   }
+
+  svg {
+    fill: red;
+  }
 `;
