@@ -142,7 +142,7 @@ export function Register() {
               </ContentInput>
 
               <Button onClick={handleUserRegister} disabled={!validations()}>
-                Entrar
+                Cadastrar
               </Button>
             </div>
           </Block>

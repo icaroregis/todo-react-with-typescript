@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Logo from "../../assets/todo.svg";
+import Logo from "../../assets/planning.png";
 import { InputProps } from "./Login.types";
 import { FcTodoList } from "react-icons/fc";
 import { convertPixelsToRem } from "../../utils";
