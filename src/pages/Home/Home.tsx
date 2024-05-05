@@ -133,7 +133,7 @@ export function Home() {
 
   useEffect(() => {
     getTasks();
-  }, [authToken.token, getTasks]);
+  }, [getTasks]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -200,7 +200,7 @@ export function Home() {
                     checked={task.completed}
                     onChange={() => handleToggleTask(task.id as number)}
                   />
-                  <TaskName completed={task.completed ? task.completed : false}>
+                  <TaskName completed={task.completed as boolean}>
                     {task.name}
                   </TaskName>
                   <div>
