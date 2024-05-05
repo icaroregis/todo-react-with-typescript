@@ -1,8 +1,9 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../service";
 import { Modal } from "../../../../components";
 import { IEditTask, IEditTaskProps } from "./EditTask.types";
 import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
+import { AuthContext } from "../../../../contexts/authContext";
 
 export function EditTask({
   state: [open, setOpen],
@@ -10,6 +11,7 @@ export function EditTask({
   taskList,
   updateFunction,
 }: IEditTaskProps) {
+  const { authToken } = useContext(AuthContext);
   const [inputValues, setInputValues] = useState<IEditTask>({
     name: "",
   });
@@ -21,7 +23,11 @@ export function EditTask({
           name: inputValues.name,
         };
 
-        await api.put(`/tasks/${taskData.id}`, data);
+        await api.put(`/tasks/${taskData.id}`, data, {
+          headers: {
+            Authorization: `Bearer ${authToken.token}`,
+          },
+        });
 
         const updatedTaskList = taskList.map((task) => {
           if (task.id === taskData.id) {
