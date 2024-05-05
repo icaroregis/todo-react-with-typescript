@@ -7,6 +7,7 @@ export interface ICompleted {
 }
 
 export const HomeContainer = styled.main`
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -205,4 +206,23 @@ export const TaskContainer = styled.div`
 
 export const TaskName = styled.p<ICompleted>`
   text-decoration: ${({ completed }) => (completed ? "line-through" : "none")};
+`;
+
+export const ButtonLogout = styled.button`
+  cursor: pointer;
+  background-color: transparent;
+  position: absolute;
+  border: none;
+  top: 80px;
+  right: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${convertPixelsToRem(5)};
+  color: ${({ theme }) => darken(0.1, theme["purple-dark"])};
+
+  svg {
+    color: ${({ theme }) => theme.blue};
+    transition: color 0.2s ease;
+  }
 `;

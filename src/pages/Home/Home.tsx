@@ -10,7 +10,7 @@ import { ITask } from "./Home.types";
 import { EditTask } from "./components";
 import { Header } from "../../components";
 import Clipboard from "../../assets/Clipboard.svg";
-import { Pen, PlusCircle, Trash } from "phosphor-react";
+import { Pen, PlusCircle, SignOut, Trash } from "phosphor-react";
 import { AuthContext } from "../../contexts/authContext";
 import {
   TaskInput,
@@ -27,10 +27,13 @@ import {
   TaskContainer,
   ScrollableContainer,
   TaskName,
+  ButtonLogout,
 } from "./Home.styles";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
+  const navigate = useNavigate();
   const { authToken, setAuthToken } = useContext(AuthContext);
   const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
   const [addTask, setAddTask] = useState<string>("");
@@ -149,6 +152,10 @@ export function Home() {
 
   return (
     <HomeContainer>
+      <ButtonLogout onClick={() => navigate("/")}>
+        <SignOut size={32} /> sair
+      </ButtonLogout>
+
       <Header />
 
       <NewTaskContainer>
