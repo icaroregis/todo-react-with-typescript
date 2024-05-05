@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { FcTodoList } from "react-icons/fc";
 import Rocket from "../../../assets/rocket.svg";
 import { convertPixelsToRem } from "../../../utils";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginCard } from "../../../components/LoginCard";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import { ClickableCustomizableLogo } from "../../../components/ClickableCustomizableLogo";
@@ -19,6 +19,7 @@ import { InputProps } from "./Register.types";
 import { api } from "../../../service";
 
 export function Register() {
+  const navigate = useNavigate();
   const [hidePassword, setHidePassword] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<InputProps>({
     name: "",
@@ -37,14 +38,19 @@ export function Register() {
 
   async function handleUserRegister() {
     try {
-      const data = {
+      const userData = {
         name: inputValues.name,
         email: inputValues.email,
         password: inputValues.password,
       };
 
-      const teste = await api.post("/users/register", { data });
-      console.log(teste);
+      await api.post("/users/register", userData);
+      setInputValues({
+        name: "",
+        email: "",
+        password: "",
+      });
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

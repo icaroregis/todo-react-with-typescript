@@ -1,10 +1,11 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../service";
 import { ITask } from "./Home.types";
 import { EditTask } from "./components";
 import { Header } from "../../components";
 import Clipboard from "../../assets/Clipboard.svg";
 import { Pen, PlusCircle, Trash } from "phosphor-react";
+import { AuthContext } from "../../contexts/authContext";
 import {
   TaskInput,
   NewTaskButton,
@@ -23,6 +24,7 @@ import {
 } from "./Home.styles";
 
 export function Home() {
+  const { authToken, setAuthToken } = useContext(AuthContext);
   const [completedTasksCount, setCompletedTasksCount] = useState<number>(0);
   const [addTask, setAddTask] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -32,6 +34,8 @@ export function Home() {
     name: "",
     completed: false,
   });
+
+  console.log();
 
   function handleToggleTask(taskId: number) {
     setTasks((prevTasks) => {
@@ -92,8 +96,17 @@ export function Home() {
 
   async function getTasks() {
     try {
-      const response = await api.get("/tasks");
-      setTasks(response.data);
+      if (authToken.id && authToken.token) {
+        const response = await api.get("/tasks", {
+          headers: {
+            Authorization: `Bearer ${authToken.token}`,
+          },
+          params: {
+            userId: authToken.id,
+          },
+        });
+        setTasks(response.data);
+      }
     } catch (error) {
       console.error("Erro ao listar as tarefas:", error);
     }
@@ -102,6 +115,15 @@ export function Home() {
   useEffect(() => {
     getTasks();
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    if (token && userId) {
+      setAuthToken({ token, id: userId });
+    }
+  }, [setAuthToken]);
 
   return (
     <HomeContainer>

@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import Logo from "../../assets/todo.svg";
 import { InputProps } from "./Login.types";
 import { FcTodoList } from "react-icons/fc";
 import { convertPixelsToRem } from "../../utils";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginCard } from "../../components/LoginCard";
-import Logo from "../../assets/todo.svg";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import { ClickableCustomizableLogo } from "../../components/ClickableCustomizableLogo";
 import {
@@ -16,8 +16,12 @@ import {
   TitleContainer,
   IconContainer,
 } from "./Login.styles";
+import { api } from "../../service";
+import { AuthContext } from "../../contexts/authContext";
 
 export function Login() {
+  const navigate = useNavigate();
+  const { setAuthToken } = useContext(AuthContext);
   const [hidePassword, setHidePassword] = useState<boolean>(false);
   const [inputValues, setInputValues] = useState<InputProps>({
     email: "",
@@ -31,7 +35,34 @@ export function Login() {
     return isDisabled;
   }
 
-  async function handleUserLogin() {}
+  async function handleUserLogin() {
+    try {
+      const userData = {
+        email: inputValues.email,
+        password: inputValues.password,
+      };
+
+      const response = await api.post("/users/login", userData);
+      const { token, userId } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
+
+      setAuthToken({
+        token,
+        id: userId,
+      });
+
+      setInputValues({
+        email: "",
+        password: "",
+      });
+
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <LoginContainer>
