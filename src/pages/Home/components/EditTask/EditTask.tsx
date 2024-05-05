@@ -4,6 +4,7 @@ import { Modal } from "../../../../components";
 import { IEditTask, IEditTaskProps } from "./EditTask.types";
 import { EditButton, EditContainer, EditInput } from "./EditTask.styles";
 import { AuthContext } from "../../../../contexts/authContext";
+import { toast } from "react-toastify";
 
 export function EditTask({
   state: [open, setOpen],
@@ -41,6 +42,7 @@ export function EditTask({
 
         updateFunction(updatedTaskList);
         setOpen(false);
+        toast.success("Tarefa editada com sucesso.");
       }
     } catch (error) {
       console.error("Erro ao editar a tarefa:", error);

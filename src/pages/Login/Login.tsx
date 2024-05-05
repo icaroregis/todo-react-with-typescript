@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
-import Logo from "../../assets/Design_sem_nome-removebg-preview.png";
+import { api } from "../../service";
+import { toast } from "react-toastify";
 import { InputProps } from "./Login.types";
 import { FcTodoList } from "react-icons/fc";
 import { convertPixelsToRem } from "../../utils";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginCard } from "../../components/LoginCard";
+import { AuthContext } from "../../contexts/authContext";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
+import Logo from "../../assets/Design_sem_nome-removebg-preview.png";
 import { ClickableCustomizableLogo } from "../../components/ClickableCustomizableLogo";
 import {
   Block,
@@ -16,8 +19,6 @@ import {
   TitleContainer,
   IconContainer,
 } from "./Login.styles";
-import { api } from "../../service";
-import { AuthContext } from "../../contexts/authContext";
 
 export function Login() {
   const navigate = useNavigate();
@@ -59,8 +60,18 @@ export function Login() {
       });
 
       navigate("/home");
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(`Erro ao fazer login: ${error.response.data.message}`);
+      } else {
+        toast.error(
+          "Erro ao fazer login. Possivelmente você ainda não tem cadastro."
+        );
+      }
     }
   }
 

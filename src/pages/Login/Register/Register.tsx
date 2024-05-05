@@ -17,6 +17,7 @@ import {
 } from "./Register.styles";
 import { InputProps } from "./Register.types";
 import { api } from "../../../service";
+import { toast } from "react-toastify";
 
 export function Register() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ export function Register() {
         password: "",
       });
       navigate("/");
+      toast.success("Usuário cadastrado com sucesso!");
     } catch (error) {
       console.error(error);
     }

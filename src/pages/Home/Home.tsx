@@ -28,6 +28,7 @@ import {
   ScrollableContainer,
   TaskName,
 } from "./Home.styles";
+import { toast } from "react-toastify";
 
 export function Home() {
   const { authToken, setAuthToken } = useContext(AuthContext);
@@ -90,6 +91,7 @@ export function Home() {
         }
 
         setAddTask("");
+        toast.success("Tarefa cadastrada com sucesso!");
       }
     } catch (error) {
       console.error("Erro ao criar tarefa:", error);
@@ -108,6 +110,7 @@ export function Home() {
           return task.id !== taskId;
         })
       );
+      toast.success("Tarefa deletada com sucesso!");
     } catch (error) {
       console.error("Erro ao excluir tarefa:", error);
     }
