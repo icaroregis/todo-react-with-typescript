@@ -35,8 +35,6 @@ export function Home() {
     completed: false,
   });
 
-  console.log();
-
   function handleToggleTask(taskId: number) {
     setTasks((prevTasks) => {
       const updatedTasks = prevTasks.map((task) => {
@@ -64,18 +62,24 @@ export function Home() {
 
   async function createTask() {
     try {
-      const newTask = {
-        name: addTask,
-        completed: false,
-      };
+      if (authToken.id && authToken.token) {
+        const newTask = {
+          name: addTask,
+          userId: authToken.id,
+        };
 
-      await api.post("/tasks", newTask);
+        await api.post("/tasks", newTask, {
+          headers: {
+            Authorization: `Bearer ${authToken.token}`,
+          },
+        });
 
-      if (addTask.trim() !== "") {
-        setTasks((prevState) => [...prevState, newTask]);
+        if (addTask.trim() !== "") {
+          setTasks((prevState) => [...prevState, newTask]);
+        }
+
+        setAddTask("");
       }
-
-      setAddTask("");
     } catch (error) {
       console.error("Erro ao criar tarefa:", error);
     }
@@ -83,7 +87,11 @@ export function Home() {
 
   async function deleteTask(taskId: number) {
     try {
-      await api.delete(`/delete/${taskId}`);
+      await api.delete(`/tasks/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${authToken.token}`,
+        },
+      });
       setTasks((prevState) =>
         prevState.filter((task) => {
           return task.id !== taskId;
@@ -114,7 +122,7 @@ export function Home() {
 
   useEffect(() => {
     getTasks();
-  }, []);
+  }, [authToken.token]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -181,7 +189,9 @@ export function Home() {
                     checked={task.completed}
                     onChange={() => handleToggleTask(task.id as number)}
                   />
-                  <TaskName completed={task.completed}>{task.name}</TaskName>
+                  <TaskName completed={task.completed ? task.completed : false}>
+                    {task.name}
+                  </TaskName>
                   <div>
                     <Trash
                       size={32}
