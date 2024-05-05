@@ -20,6 +20,11 @@ export const NewTaskContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+
+  @media (max-width: 760px) {
+    width: 100%;
+    margin-top: ${convertPixelsToRem(-37)};
+  }
 `;
 
 export const TaskInput = styled.input`
@@ -34,6 +39,10 @@ export const TaskInput = styled.input`
   &:focus {
     outline: 0;
     border: 2px solid ${({ theme }) => theme["blue-dark"]};
+  }
+
+  @media (max-width: 760px) {
+    width: 100%;
   }
 `;
 
@@ -224,5 +233,12 @@ export const ButtonLogout = styled.button`
   svg {
     color: ${({ theme }) => theme.blue};
     transition: color 0.2s ease;
+  }
+`;
+
+export const ResponsiveContainer = styled.div`
+  @media (max-width: 760px) {
+    width: 100%;
+    padding: ${convertPixelsToRem(10)};
   }
 `;

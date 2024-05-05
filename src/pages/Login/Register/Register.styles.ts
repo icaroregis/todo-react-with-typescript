@@ -15,6 +15,19 @@ export const RegisterContainer = styled.div`
   align-items: center;
   height: 100vh;
   gap: ${convertPixelsToRem(100)};
+
+  @media (max-width: 1442px) {
+    > div:last-child {
+      padding-right: 20px;
+    }
+  }
+
+  @media (max-width: 1210px) {
+    > div:last-child {
+      padding-right: 0px;
+    }
+    gap: 0px;
+  }
 `;
 
 export const ContainerLogo = styled.div`

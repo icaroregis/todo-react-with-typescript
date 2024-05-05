@@ -28,6 +28,7 @@ import {
   ScrollableContainer,
   TaskName,
   ButtonLogout,
+  ResponsiveContainer,
 } from "./Home.styles";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -158,80 +159,82 @@ export function Home() {
 
       <Header />
 
-      <NewTaskContainer>
-        <TaskInput
-          placeholder="Adicione uma nova tarefa"
-          value={addTask}
-          onChange={({ target }: ChangeEvent<HTMLInputElement>) =>
-            setAddTask(target.value)
-          }
-        />
-        <NewTaskButton onClick={createTask} disabled={!addTask.trim()}>
-          Criar <PlusCircle size={25} />
-        </NewTaskButton>
-      </NewTaskContainer>
+      <ResponsiveContainer>
+        <NewTaskContainer>
+          <TaskInput
+            placeholder="Adicione uma nova tarefa"
+            value={addTask}
+            onChange={({ target }: ChangeEvent<HTMLInputElement>) =>
+              setAddTask(target.value)
+            }
+          />
+          <NewTaskButton onClick={createTask} disabled={!addTask.trim()}>
+            Criar <PlusCircle size={25} />
+          </NewTaskButton>
+        </NewTaskContainer>
 
-      <TasksCreatedAndCompletedContainer>
-        <IndicatorsStartContainer>
-          <strong>Tarefas criadas</strong>
-          <CreatedTasks>{tasks.length}</CreatedTasks>
-        </IndicatorsStartContainer>
+        <TasksCreatedAndCompletedContainer>
+          <IndicatorsStartContainer>
+            <strong>Tarefas criadas</strong>
+            <CreatedTasks>{tasks.length}</CreatedTasks>
+          </IndicatorsStartContainer>
 
-        <IndicatorsFinishContainer>
-          <strong>Concluídas</strong>
-          <CompletedTasks>
-            {!tasks.length ? 0 : `${completedTasksCount} de ${tasks.length}`}
-          </CompletedTasks>
-        </IndicatorsFinishContainer>
-      </TasksCreatedAndCompletedContainer>
+          <IndicatorsFinishContainer>
+            <strong>Concluídas</strong>
+            <CompletedTasks>
+              {!tasks.length ? 0 : `${completedTasksCount} de ${tasks.length}`}
+            </CompletedTasks>
+          </IndicatorsFinishContainer>
+        </TasksCreatedAndCompletedContainer>
 
-      <ScrollableContainer>
-        <TaskListContainer>
-          {!tasks.length ? (
-            <EmptyTaskListContainer>
-              <div>
-                <img
-                  src={Clipboard}
-                  alt="Ícone de uma prancheta representando que não há atividades na lista"
-                />
-              </div>
-
-              <div>
-                <strong>Você ainda não tem tarefas cadastradas</strong>
-                <p>Crie tarefas e organize seus itens a fazer</p>
-              </div>
-            </EmptyTaskListContainer>
-          ) : (
-            tasks.map((task) => {
-              return (
-                <TaskContainer key={task.id}>
-                  <input
-                    type="checkbox"
-                    checked={task.completed}
-                    onChange={() => handleToggleTask(task.id as number)}
+        <ScrollableContainer>
+          <TaskListContainer>
+            {!tasks.length ? (
+              <EmptyTaskListContainer>
+                <div>
+                  <img
+                    src={Clipboard}
+                    alt="Ícone de uma prancheta representando que não há atividades na lista"
                   />
-                  <TaskName completed={task.completed as boolean}>
-                    {task.name}
-                  </TaskName>
-                  <div>
-                    <Trash
-                      size={32}
-                      onClick={() => deleteTask(task.id as number)}
+                </div>
+
+                <div>
+                  <strong>Você ainda não tem tarefas cadastradas</strong>
+                  <p>Crie tarefas e organize seus itens a fazer</p>
+                </div>
+              </EmptyTaskListContainer>
+            ) : (
+              tasks.map((task) => {
+                return (
+                  <TaskContainer key={task.id}>
+                    <input
+                      type="checkbox"
+                      checked={task.completed}
+                      onChange={() => handleToggleTask(task.id as number)}
                     />
-                    <Pen
-                      size={32}
-                      onClick={() => {
-                        setOpenEditModal(true);
-                        setTaskData(task);
-                      }}
-                    />
-                  </div>
-                </TaskContainer>
-              );
-            })
-          )}
-        </TaskListContainer>
-      </ScrollableContainer>
+                    <TaskName completed={task.completed as boolean}>
+                      {task.name}
+                    </TaskName>
+                    <div>
+                      <Trash
+                        size={32}
+                        onClick={() => deleteTask(task.id as number)}
+                      />
+                      <Pen
+                        size={32}
+                        onClick={() => {
+                          setOpenEditModal(true);
+                          setTaskData(task);
+                        }}
+                      />
+                    </div>
+                  </TaskContainer>
+                );
+              })
+            )}
+          </TaskListContainer>
+        </ScrollableContainer>
+      </ResponsiveContainer>
 
       {openEditModal && (
         <EditTask

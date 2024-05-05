@@ -18,4 +18,8 @@ export const Container = styled.div<IGlobalCard>`
   height: ${({ height }) => (height ? height : "100%")};
   z-index: 1;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  @media (max-width: 600px) {
+    height: 100vh;
+  }
 `;
