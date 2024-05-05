@@ -38,6 +38,7 @@ export const ContainerLogo = styled.div`
 `;
 
 export const Block = styled.div`
+  border: 1px solid yellow;
   display: flex;
   justify-content: center;
   align-items: center;

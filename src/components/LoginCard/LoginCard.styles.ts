@@ -21,5 +21,6 @@ export const Container = styled.div<IGlobalCard>`
 
   @media (max-width: 600px) {
     height: 100vh;
+    width: 100vw;
   }
 `;
