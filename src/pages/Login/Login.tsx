@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import Logo from "../../assets/planning.png";
+import Logo from "../../assets/Design_sem_nome-removebg-preview.png";
 import { InputProps } from "./Login.types";
 import { FcTodoList } from "react-icons/fc";
 import { convertPixelsToRem } from "../../utils";
