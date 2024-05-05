@@ -1,4 +1,10 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../../service";
 import { ITask } from "./Home.types";
 import { EditTask } from "./components";
@@ -63,19 +69,24 @@ export function Home() {
   async function createTask() {
     try {
       if (authToken.id && authToken.token) {
-        const newTask = {
+        const newTaskData = {
           name: addTask,
           userId: authToken.id,
         };
 
-        await api.post("/tasks", newTask, {
+        const response = await api.post("/tasks", newTaskData, {
           headers: {
             Authorization: `Bearer ${authToken.token}`,
           },
         });
 
-        if (addTask.trim() !== "") {
-          setTasks((prevState) => [...prevState, newTask]);
+        const newTask = response.data;
+
+        if (newTask) {
+          if (addTask.trim() !== "") {
+            setTasks((prevState) => [...prevState, newTask]);
+          }
+          setAddTask("");
         }
 
         setAddTask("");
@@ -102,7 +113,7 @@ export function Home() {
     }
   }
 
-  async function getTasks() {
+  const getTasks = useCallback(async () => {
     try {
       if (authToken.id && authToken.token) {
         const response = await api.get("/tasks", {
@@ -118,11 +129,11 @@ export function Home() {
     } catch (error) {
       console.error("Erro ao listar as tarefas:", error);
     }
-  }
+  }, [authToken.id, authToken.token, setTasks]);
 
   useEffect(() => {
     getTasks();
-  }, [authToken.token]);
+  }, [authToken.token, getTasks]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
