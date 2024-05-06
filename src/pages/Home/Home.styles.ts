@@ -234,6 +234,10 @@ export const ButtonLogout = styled.button`
     color: ${({ theme }) => theme.blue};
     transition: color 0.2s ease;
   }
+
+  @media (max-width: 450px) {
+    right: 7px;
+  }
 `;
 
 export const ResponsiveContainer = styled.div`
