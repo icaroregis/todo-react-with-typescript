@@ -61,12 +61,9 @@ export function Login() {
 
       navigate("/home");
     } catch (error: any) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(`Erro ao fazer login: ${error.response.data.message}`);
+      console.log("erro vindo do back", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(`Erro ao fazer login: ${error.response.data.error}`);
       } else {
         toast.error(
           "Erro ao fazer login. Possivelmente você ainda não tem cadastro."
